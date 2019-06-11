@@ -1,15 +1,15 @@
 import { RoundButtonComponent } from './round-button/round-button.component';
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { CanvasDrawerComponent } from './canvas-drawer/canvas-drawer.component';
-import { PluginManager } from 'zlux-base/plugin-manager/plugin-manager'
+import { StepperService } from './service/stepper.service';
 
-interface Stepper {
-  id: number;
+export interface Stepper {
+  id: string;
   name: string;
   steps: Step[];
 }
 
-interface Step {
+export interface Step {
   index: number;
   selector: string;
   description: string;
@@ -73,8 +73,12 @@ export class HelpWidgetComponent implements OnInit {
   closeSrc = require('../../assets/images/help-widget/close.svg');
   reportSrc = require('../../assets/images/help-widget/report.svg');
 
-  constructor() {
+  constructor(private stepperService: StepperService) {
     this.showButtons = false;
+    this.stepperService.getSteppersForInstalledPlugins().then((steppers)=>{
+      this.steppers = steppers;
+      console.log('I am steppers', this.steppers);
+    });
   }
 
   toggleShowButtons() {
@@ -175,7 +179,7 @@ export class HelpWidgetComponent implements OnInit {
 
     // create Stepper instance
     this.currentStepper = {
-      id: ++this.lastStepperId,
+      id: ++this.lastStepperId + '',
       name: '',
       steps: []
     };
