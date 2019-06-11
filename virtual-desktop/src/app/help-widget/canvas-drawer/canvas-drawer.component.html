@@ -9,7 +9,8 @@
       <button class="iz-tool stepper-tool" [ngClass]="{'active': tool == 'stepper'}" (click)="stepperTool()"></button>
       <button class="iz-tool text-tool" [ngClass]="{'active': tool == 'text'}" (click)="textTool()"></button>
       <button class="iz-tool marker-tool" [ngClass]="{'active': tool == 'marker'}" (click)="markerTool()"></button>
-      <button class="send-button"  (click)="sendIssueReport()">Send report</button>
+      <button class="iz-button send-button m-r-30"  (click)="sendIssueReport()">Send report</button>
+      <button class="iz-button cancel-button"  (click)="destroyDrawer()">Cancel</button>
     </div>
   </div>
 </div>

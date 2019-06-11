@@ -13,7 +13,9 @@
     className="'report-btn'"><img [src]="reportSrc"/>
   </round-button>
   <round-button
-    (click)="toggleShowButtons()">
+    (click)="toggleShowButtons()"
+    class="fab"
+    [ngClass]="{'cross':showButtons}">
     <span class="font-20" *ngIf="!showButtons">?</span>
     <img [src]="closeSrc" *ngIf="showButtons"/>
   </round-button>
