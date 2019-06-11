@@ -94,8 +94,8 @@ export class CanvasDrawerComponent {
   }
 
   stepperTool() {
-    this.tool = 'stepper';
     this.resetTool();
+    this.tool = 'stepper';
     this.$currentTool = fromEvent(this.canvas, 'click').subscribe((e: any) => {
       const x = e.clientX - e.target.offsetLeft;
       const y = e.clientY - e.target.offsetTop;
@@ -111,8 +111,8 @@ export class CanvasDrawerComponent {
   }
 
   penTool() {
-    this.tool = 'pen';
     this.resetTool();
+    this.tool = 'pen';
     this.cx.lineWidth = 3;
     this.cx.lineCap = 'round';
     this.cx.strokeStyle = '#ff0000';
@@ -120,8 +120,8 @@ export class CanvasDrawerComponent {
   }
 
   markerTool() {
-    this.tool = 'marker';
     this.resetTool();
+    this.tool = 'marker';
     this.cx.lineWidth = 15;
     this.cx.lineCap = 'butt';
     this.cx.strokeStyle = 'rgba(255,0,0,0.4)';
@@ -129,9 +129,9 @@ export class CanvasDrawerComponent {
   }
 
   textTool() {
+    this.resetTool();
     this.tool = 'text';
     console.log('onTextTool click');
-    this.resetTool();
     this.captureTextCreationEvent();
   }
 
