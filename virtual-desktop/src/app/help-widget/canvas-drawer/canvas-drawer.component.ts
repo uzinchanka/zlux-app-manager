@@ -65,8 +65,10 @@ export class CanvasDrawerComponent {
 
   capture() {
     this.showReporter = true;
+    console.log('I am capture');
     html2canvas(document.documentElement, {
-      allowTaint: true, foreignObjectRendering: true, useCORS: true, ignoreElements: (el: HTMLElement) => {
+      allowTaint: true,
+      ignoreElements: (el: HTMLElement) => {
         return el.classList.contains('iz-help-container');
       }
     })

@@ -13,6 +13,10 @@ export class HelpWidgetComponent implements OnInit {
   @ViewChild('izCanvasDrawer')
   izCanvasDrawer: CanvasDrawerComponent;
 
+  descSrc = require('../../assets/images/help-widget/description.svg');
+  closeSrc = require('../../assets/images/help-widget/close.svg');
+  reportSrc = require('../../assets/images/help-widget/report.svg');
+
   constructor() {
     this.showButtons = false;
   }
