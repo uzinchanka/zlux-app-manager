@@ -1,10 +1,12 @@
 <div class="iz-help-container">
   <round-button 
+    #wizardButton
     *ngIf="showButtons" 
     (click)="wizardsClicked()" 
     className="'help-btn'"
     text="Help"><img src="../../assets/cursors/description.svg"/></round-button>
   <round-button 
+    #reportButton
     *ngIf="showButtons" 
     (click)="reportClicked()" 
     text="Report an issue"
@@ -21,3 +23,152 @@
     </round-button>
 </div>
 <iz-canvas-drawer #izCanvasDrawer></iz-canvas-drawer>
+
+
+
+
+
+<!--  HELP  -->
+
+<div id="overlay" [style.visibility]="isShownOverlay ? 'visible' : 'hidden'"></div>
+
+<ng-template #wizardInit>
+
+    <div class="stepper-block">
+      <div class="label">
+        STEP GUIDES
+      </div>
+
+      <div class="steppers-container">
+        <ng-container *ngFor="let stepper of steppers">
+          <div class="stepper">
+            <div class="name">
+              {{ stepper.name }}
+            </div>
+            <div class="actions">
+
+              <span class="view-step" (click)="onViewStepperClick(stepper)">
+                <svg width="22" height="20" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M11 3.33333C13.5003 3.33333 15.891 4.52552 18.1191 6.48429C18.8792 7.15253 19.5669 7.86596 20.1723 8.57968C20.5375 9.01036 20.7969 9.34916 20.9389 9.551L21.2548 9.99999L20.9389 10.449C20.7969 10.6508 20.5375 10.9896 20.1723 11.4203C19.5669 12.134 18.8792 12.8475 18.1191 13.5157C15.891 15.4745 13.5003 16.6667 11 16.6667C8.49975 16.6667 6.10897 15.4745 3.88091 13.5157C3.12079 12.8475 2.43312 12.134 1.82776 11.4203C1.46246 10.9896 1.20311 10.6508 1.06111 10.449L0.745224 9.99999L1.06111 9.551C1.20311 9.34916 1.46246 9.01036 1.82776 8.57968C2.43312 7.86596 3.12079 7.15253 3.88091 6.48429C6.10897 4.52552 8.49975 3.33333 11 3.33333ZM18.7204 9.59739C18.1662 8.94393 17.536 8.29016 16.8446 7.68237C14.9256 5.99531 12.9297 4.99999 11 4.99999C9.07035 4.99999 7.07438 5.99531 5.15538 7.68237C4.46403 8.29016 3.83386 8.94393 3.27961 9.59739C3.1599 9.73852 3.04929 9.87318 2.94816 9.99999C3.04929 10.1268 3.1599 10.2615 3.27961 10.4026C3.83386 11.0561 4.46403 11.7098 5.15538 12.3176C7.07438 14.0047 9.07035 15 11 15C12.9297 15 14.9256 14.0047 16.8446 12.3176C17.536 11.7098 18.1662 11.0561 18.7204 10.4026C18.8401 10.2615 18.9507 10.1268 19.0519 9.99999C18.9507 9.87318 18.8401 9.73852 18.7204 9.59739ZM7.33333 10C7.33333 11.8409 8.97496 13.3333 11 13.3333C13.025 13.3333 14.6667 11.8409 14.6667 10C14.6667 8.15905 13.025 6.66666 11 6.66666C8.97496 6.66666 7.33333 8.15905 7.33333 10ZM12.8333 9.99999C12.8333 10.9205 12.0125 11.6667 11 11.6667C9.98748 11.6667 9.16667 10.9205 9.16667 9.99999C9.16667 9.07952 9.98748 8.33333 11 8.33333C12.0125 8.33333 12.8333 9.07952 12.8333 9.99999Z" fill="#464646"/>
+                </svg>
+              </span>
+
+              <span class="edit-step" (click)="onEditStepperClick(stepper)">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M10.9582 1.33333C11.3947 1.33333 11.8131 1.50761 12.1187 1.81561L14.186 3.88288C14.4938 4.19066 14.6667 4.60811 14.6667 5.04338C14.6667 5.47866 14.4938 5.8961 14.186 6.20389L6.63833 13.7492C6.17268 14.2863 5.5126 14.6163 4.7564 14.6682H1.33333V14.0015L1.33549 11.1915C1.39229 10.4886 1.71911 9.83488 2.21766 9.39561L9.79692 1.81641C10.1043 1.50721 10.5222 1.33333 10.9582 1.33333ZM4.70932 13.3365C5.06547 13.3113 5.39699 13.1456 5.66319 12.8411L10.7045 7.7998L8.20155 5.29679L3.13073 10.3664C2.86063 10.6053 2.69353 10.9395 2.66666 11.2452V13.3353L4.70932 13.3365ZM9.14447 4.35409L11.6473 6.85699L13.2432 5.26108C13.3009 5.20334 13.3334 5.12503 13.3334 5.04338C13.3334 4.96173 13.3009 4.88342 13.2432 4.82569L11.1741 2.75657C11.117 2.69903 11.0393 2.66666 10.9582 2.66666C10.8772 2.66666 10.7995 2.69903 10.7424 2.75657L9.14447 4.35409Z" fill="#282828"/>
+                </svg> 
+              </span>
+
+            </div>
+            
+          </div>
+        </ng-container>
+      </div>
+
+      <div class="steppers-container">
+        <button class="add-stepper-btn" (click)="onAddStepperClick()">
+          ADD NEW STEPPER
+        </button>
+      </div>
+    </div>
+
+    <!-- <div class="points-block">
+      <div class="label">
+        INTRO POINTS
+      </div>
+      <div class="steppers-container">
+        
+      </div>
+    </div> -->
+
+</ng-template>
+
+<ng-template #wizardCreation>
+
+    <div class="stepper-name">
+      <input id="stepperName" [(ngModel)]="currentStepperName" />
+    </div>
+
+    <div class="stepper-block">
+      <div class="label">
+        CHOSEN STEPS
+      </div>
+
+      <div class="steppers-container">
+
+        <ng-container *ngFor="let step of currentStepper.steps">
+
+          <div class="step">
+            <div class="description">
+              {{ step.description }}
+            </div>
+            <div class="actions">
+
+              <span class="view-step" (click)="onViewStepClick(step)">
+                <svg width="22" height="20" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M11 3.33333C13.5003 3.33333 15.891 4.52552 18.1191 6.48429C18.8792 7.15253 19.5669 7.86596 20.1723 8.57968C20.5375 9.01036 20.7969 9.34916 20.9389 9.551L21.2548 9.99999L20.9389 10.449C20.7969 10.6508 20.5375 10.9896 20.1723 11.4203C19.5669 12.134 18.8792 12.8475 18.1191 13.5157C15.891 15.4745 13.5003 16.6667 11 16.6667C8.49975 16.6667 6.10897 15.4745 3.88091 13.5157C3.12079 12.8475 2.43312 12.134 1.82776 11.4203C1.46246 10.9896 1.20311 10.6508 1.06111 10.449L0.745224 9.99999L1.06111 9.551C1.20311 9.34916 1.46246 9.01036 1.82776 8.57968C2.43312 7.86596 3.12079 7.15253 3.88091 6.48429C6.10897 4.52552 8.49975 3.33333 11 3.33333ZM18.7204 9.59739C18.1662 8.94393 17.536 8.29016 16.8446 7.68237C14.9256 5.99531 12.9297 4.99999 11 4.99999C9.07035 4.99999 7.07438 5.99531 5.15538 7.68237C4.46403 8.29016 3.83386 8.94393 3.27961 9.59739C3.1599 9.73852 3.04929 9.87318 2.94816 9.99999C3.04929 10.1268 3.1599 10.2615 3.27961 10.4026C3.83386 11.0561 4.46403 11.7098 5.15538 12.3176C7.07438 14.0047 9.07035 15 11 15C12.9297 15 14.9256 14.0047 16.8446 12.3176C17.536 11.7098 18.1662 11.0561 18.7204 10.4026C18.8401 10.2615 18.9507 10.1268 19.0519 9.99999C18.9507 9.87318 18.8401 9.73852 18.7204 9.59739ZM7.33333 10C7.33333 11.8409 8.97496 13.3333 11 13.3333C13.025 13.3333 14.6667 11.8409 14.6667 10C14.6667 8.15905 13.025 6.66666 11 6.66666C8.97496 6.66666 7.33333 8.15905 7.33333 10ZM12.8333 9.99999C12.8333 10.9205 12.0125 11.6667 11 11.6667C9.98748 11.6667 9.16667 10.9205 9.16667 9.99999C9.16667 9.07952 9.98748 8.33333 11 8.33333C12.0125 8.33333 12.8333 9.07952 12.8333 9.99999Z" fill="#464646"/>
+                </svg>
+              </span>
+
+              <span class="edit-step" (click)="onEditStepClick(step)">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M10.9582 1.33333C11.3947 1.33333 11.8131 1.50761 12.1187 1.81561L14.186 3.88288C14.4938 4.19066 14.6667 4.60811 14.6667 5.04338C14.6667 5.47866 14.4938 5.8961 14.186 6.20389L6.63833 13.7492C6.17268 14.2863 5.5126 14.6163 4.7564 14.6682H1.33333V14.0015L1.33549 11.1915C1.39229 10.4886 1.71911 9.83488 2.21766 9.39561L9.79692 1.81641C10.1043 1.50721 10.5222 1.33333 10.9582 1.33333ZM4.70932 13.3365C5.06547 13.3113 5.39699 13.1456 5.66319 12.8411L10.7045 7.7998L8.20155 5.29679L3.13073 10.3664C2.86063 10.6053 2.69353 10.9395 2.66666 11.2452V13.3353L4.70932 13.3365ZM9.14447 4.35409L11.6473 6.85699L13.2432 5.26108C13.3009 5.20334 13.3334 5.12503 13.3334 5.04338C13.3334 4.96173 13.3009 4.88342 13.2432 4.82569L11.1741 2.75657C11.117 2.69903 11.0393 2.66666 10.9582 2.66666C10.8772 2.66666 10.7995 2.69903 10.7424 2.75657L9.14447 4.35409Z" fill="#282828"/>
+                </svg> 
+              </span>
+
+            </div>
+            
+          </div>
+
+        </ng-container>
+
+        <button class="add-stepper-btn" (click)="onAddNewStepClick()">
+          ADD NEW STEP
+        </button>
+      </div>
+
+      <div class="action-block">
+        <button class="add-stepper-btn" (click)="onFinishStepper()">
+          SAVE GUIDE
+        </button>
+      </div>
+
+    </div>
+
+</ng-template>
+
+<div #helpMenu class="help-menu" [style.visibility]="isShownMenu ? 'visible' : 'hidden'">
+  <ng-container *ngTemplateOutlet="isInitMode ? wizardInit : wizardCreation">
+  </ng-container>
+</div>
+
+<div #stepTooltip class="stepper-tooltip" [style.visibility]="isShownStepTooltip ? 'visible' : 'hidden'">
+    <ng-container *ngTemplateOutlet="(isEditStepMode || isAddStepMode) ? editTooltipMode : viewTooltipMode">
+    </ng-container>
+</div>
+
+<ng-template #viewTooltipMode>
+
+  <div class="description-block">
+    {{ stepDescription }}
+  </div>
+
+  <div class="actions-block">
+    <button class="finish-guide" (click)="finishGuideStepClick()">Finish guide</button>
+    <button class="next-step" (click)="nextStepClick()" [style.visibility]="(!isLastStep && isShownStepTooltip) ? 'visible' : 'hidden'">Next</button>
+  </div>
+
+</ng-template>
+
+<ng-template #editTooltipMode>
+
+  <div class="description-block">
+    <textarea [(ngModel)]="stepDescription" name="textarea"></textarea>
+  </div>
+
+  <div class="actions-block">
+    <button class="cancel-step" (click)="cancelAddStepClick()">Cancel</button>
+    <button class="add-step" (click)="addStepClick()">Save</button>
+  </div>
+
+</ng-template>

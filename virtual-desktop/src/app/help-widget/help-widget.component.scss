@@ -10,3 +10,187 @@
 .font-20 {
   font-size: 20px;
 }
+
+
+.help-menu {
+  border-radius: 25px;
+  height: 400px;
+  width: 300px;
+  background-color: wheat;
+  position: fixed;
+  right: 25px;
+  bottom: 190px;
+  padding: 20px;
+  z-index: 20;
+
+  .label {
+    padding-bottom: 10px;
+    padding-top: 5px;
+  }
+
+  .steppers-container {
+    margin-bottom: 10px;
+
+    .stepper {
+
+      display: flex;
+      padding-left: 10px;
+      padding-right: 10px;
+      margin-bottom: 5px;
+      width: 100%;
+      height: 30px;
+      box-sizing: border-box;
+      cursor: pointer;
+      background: #C4C4C4;
+      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+      border-radius: 10px;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      justify-content: center;
+      align-items: center;
+
+      .name {
+        width: 100%;
+        flex-grow: 1;
+      }
+
+      .actions {
+        width: 50px;
+      }
+      
+    }
+
+  }
+
+
+  .step {
+    display: flex;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-bottom: 5px;
+    width: 100%;
+    height: 30px;
+    box-sizing: border-box;
+    cursor: pointer;
+    background: #C4C4C4;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+
+    .description {
+      width: 100%;
+      flex-grow: 1;
+    }
+
+    .actions {
+      width: 50px;
+    }
+
+  }
+
+}
+
+#overlay {
+  pointer-events: none;
+  position: fixed;
+  width: 100%; 
+  height: 100%; 
+  top: 0; 
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.2); 
+  z-index: 1;
+  cursor: pointer; 
+}
+
+.add-stepper-btn {
+  display: block;
+  margin: 0;
+  width: 100%;
+  height: 30px;
+  background: rgba(180, 182, 184, 0.99);
+  border: 1px solid #8A8A8A;
+  box-sizing: border-box;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all .2s ease;
+  -webkit-transition: all .2s ease;
+
+  &:focus {
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+    outline: none;
+  }
+
+  &:hover {
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.4);
+  }
+
+}
+
+
+
+.stepper-tooltip {
+
+  height: 100px;
+  width: 200px;
+  background-color: wheat;
+  position: absolute;
+  z-index: 50;
+  border-radius: 10px;
+
+  .description-block {
+
+    padding: 10px;
+
+    textarea {
+      width: 175px;
+      resize: vertical;
+      max-height: 80px;
+      min-height: 30px;
+      border-radius: 10px;
+
+      &:focus {
+        outline: none;
+      }
+
+    }
+
+  }
+
+  .actions-block {
+
+    display: flex;
+    justify-content: space-around;
+
+    .cancel-step {
+
+      background: rgba(180, 182, 184, 0.99);
+      border: 1px solid #8A8A8A;
+      box-sizing: border-box;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all .2s ease;
+      -webkit-transition: all .2s ease;
+
+    }
+
+    .add-step {
+
+      background: rgba(180, 182, 184, 0.99);
+      border: 1px solid #8A8A8A;
+      box-sizing: border-box;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all .2s ease;
+      -webkit-transition: all .2s ease;
+
+    }
+  }
+}

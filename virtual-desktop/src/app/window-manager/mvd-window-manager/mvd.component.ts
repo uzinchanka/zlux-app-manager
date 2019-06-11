@@ -15,6 +15,7 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'rs-com-root',
   templateUrl: './mvd.component.html',
+  styleUrls: ['./mvd.component.css']
 })
 export class MvdComponent {
 
