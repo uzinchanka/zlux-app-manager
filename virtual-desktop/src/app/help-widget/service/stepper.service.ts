@@ -29,7 +29,7 @@ export class StepperService {
 
   getSteppersForInstalledPlugins(): Promise<Stepper[]> {
     return PluginManager.loadPlugins().then((plugins: any[]) => {
-      return plugins.filter((p)=>p.webContent).map((plugin) => {
+      return plugins.filter((p)=>p.webContent && p.webContent.launchDefinition).map((plugin) => {
         return {
           id: plugin.identifier,
           name: plugin.webContent.launchDefinition.pluginShortNameDefault,
