@@ -1,11 +1,8 @@
 .iz-help-container {
+  bottom: 0;
   position: fixed;
-  right: 20px;
-  bottom: 70px;
-  height: 400px;
-  display: flex;
-  justify-content: flex-end;
-  flex-direction: column;
+  margin: 1em;
+  right: 0px;
 }
 .font-20 {
   font-size: 20px;

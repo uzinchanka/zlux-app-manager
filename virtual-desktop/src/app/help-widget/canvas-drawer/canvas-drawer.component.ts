@@ -61,6 +61,7 @@ export class CanvasDrawerComponent {
   destroyDrawer() {
     this.showReporter = false;
     this.markCounter = 0;
+    this.resetTool();
   }
 
   capture() {
@@ -186,6 +187,7 @@ export class CanvasDrawerComponent {
   }
 
   private resetTool() {
+    this.tool = '';
     this.$currentTool && this.$currentTool.unsubscribe();
   }
 

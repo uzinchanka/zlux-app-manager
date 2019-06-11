@@ -1,10 +1,10 @@
 <div class="iz-help-container">
-  <round-button 
+  <round-button *ngIf="showButtons"
     (click)="wizardsClicked()" 
     className="'help-btn'"
     text="Help"><img [src]="descSrc"/>
   </round-button>
-  <round-button 
+  <round-button *ngIf="showButtons"
     (click)="reportClicked()" 
     text="Report an issue"
     className="'report-btn'"><img [src]="reportSrc"/>
