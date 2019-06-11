@@ -4,23 +4,21 @@
     *ngIf="showButtons" 
     (click)="wizardsClicked()" 
     className="'help-btn'"
-    text="Help"><img src="../../assets/cursors/description.svg"/></round-button>
+    text="Help"><img [src]="descSrc"/></round-button>
   <round-button 
     #reportButton
     *ngIf="showButtons" 
     (click)="reportClicked()" 
     text="Report an issue"
-    className="'report-btn'"><img src="../../assets/cursors/report.svg"/></round-button>
-    <round-button  
-      *ngIf="!showButtons"
-      (click)="toggleShowButtons()">
-      <span class="font-20">?</span>
-    </round-button>
-    <round-button  
-      *ngIf="showButtons"
-      (click)="toggleShowButtons()">
-      <img src="../../assets/cursors/close.svg"/>
-    </round-button>
+    className="'report-btn'"><img [src]="reportSrc"/>
+  </round-button>
+  <round-button
+    (click)="toggleShowButtons()"
+    class="fab"
+    [ngClass]="{'cross':showButtons}">
+    <span class="font-20" *ngIf="!showButtons">?</span>
+    <img [src]="closeSrc" *ngIf="showButtons"/>
+  </round-button>
 </div>
 <iz-canvas-drawer #izCanvasDrawer></iz-canvas-drawer>
 

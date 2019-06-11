@@ -1,16 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-class Step {
-  id: number;
-  text: string;
-  xpath: string;
-}
-class Stepper {
-  id: string;
-  name: string;
-  steps: Step[]
-}
+import { Stepper } from '../help-widget.component';
+
+import { PluginManager } from '../../../../../../zlux-platform/base/src/plugin-manager/plugin-manager';
 
 
 @Injectable({
@@ -32,5 +25,17 @@ export class StepperService {
 
   getOne(id: string): Observable<Stepper> {
     return this.http.get(this.BASE_PATH + `/stepper/${id}`) as Observable<Stepper>;
+  }
+
+  getSteppersForInstalledPlugins(): Promise<Stepper[]> {
+    return PluginManager.loadPlugins().then((plugins: any[]) => {
+      return plugins.filter((p)=>p.webContent && p.webContent.launchDefinition).map((plugin) => {
+        return {
+          id: plugin.identifier,
+          name: plugin.webContent.launchDefinition.pluginShortNameDefault,
+          steps: []
+        }
+      });
+    });
   }
 }

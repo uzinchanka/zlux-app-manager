@@ -8,11 +8,6 @@
   align-items: center;
   justify-content: center;
   background-color: rgba(0,0,0,0.5);
-  .send-button {
-    float: right;
-    padding: 9px;
-    margin-right: 10px;
-  }
   .action-panel {
     margin: 16px;
     padding: 10px;
@@ -45,4 +40,24 @@
       }
     }
   }
+}
+.m-r-30 {
+  margin-right: 30px !important;
+}
+
+.iz-button {
+  font-size: 13px;
+  line-height: 15px;
+  float: right;
+  padding: 8px 16px;
+  margin-right: 10px;
+  border: 1px solid #0062FF;
+}
+.send-button {
+  background-color: #0062FF;
+  color: white;
+}
+.cancel-button {
+  background-color: transparent;
+  color: #0062FF;
 }

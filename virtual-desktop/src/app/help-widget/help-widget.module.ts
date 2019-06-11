@@ -14,7 +14,8 @@ import {HttpClientModule} from '@angular/common/http';
     FormsModule,
     HttpClientModule,
   ],
-  declarations: [HelpWidgetComponent, RoundButtonComponent, CanvasDrawerComponent, TextAreaComponent],
+  declarations: [HelpWidgetComponent, RoundButtonComponent, CanvasDrawerComponent,TextAreaComponent],
+  entryComponents: [TextAreaComponent],
   exports: [HelpWidgetComponent],
   providers: [IssueReportService]
 })
