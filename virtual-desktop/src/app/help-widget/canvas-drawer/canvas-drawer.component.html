@@ -1,0 +1,15 @@
+<div class="canvas-drawer" *ngIf="showReporter" (click)="destroyDrawer()">
+  <div class="work-area">
+    <div class="canvas-sandbox">
+      <div id="izCanvas" #izCanvas (click)="$event.stopPropagation()" [ngClass]="cursorClass"></div>
+      <div #canvasContainer></div>
+    </div> 
+    <div class="action-panel" (click)="$event.stopPropagation()">
+      <button class="iz-tool pen-tool" [ngClass]="{'active': tool == 'pen'}" (click)="penTool()"></button>
+      <button class="iz-tool stepper-tool" [ngClass]="{'active': tool == 'stepper'}" (click)="stepperTool()"></button>
+      <button class="iz-tool text-tool" [ngClass]="{'active': tool == 'text'}" (click)="textTool()"></button>
+      <button class="iz-tool marker-tool" [ngClass]="{'active': tool == 'marker'}" (click)="markerTool()"></button>
+      <button class="send-button"  (click)="sendIssueReport()">Send report</button>
+    </div>
+  </div>
+</div>

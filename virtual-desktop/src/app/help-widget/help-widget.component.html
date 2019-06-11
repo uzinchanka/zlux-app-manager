@@ -1,0 +1,23 @@
+<div class="iz-help-container">
+  <round-button 
+    *ngIf="showButtons" 
+    (click)="wizardsClicked()" 
+    className="'help-btn'"
+    text="Help"><img src="../../assets/cursors/description.svg"/></round-button>
+  <round-button 
+    *ngIf="showButtons" 
+    (click)="reportClicked()" 
+    text="Report an issue"
+    className="'report-btn'"><img src="../../assets/cursors/report.svg"/></round-button>
+    <round-button  
+      *ngIf="!showButtons"
+      (click)="toggleShowButtons()">
+      <span class="font-20">?</span>
+    </round-button>
+    <round-button  
+      *ngIf="showButtons"
+      (click)="toggleShowButtons()">
+      <img src="../../assets/cursors/close.svg"/>
+    </round-button>
+</div>
+<iz-canvas-drawer #izCanvasDrawer></iz-canvas-drawer>

@@ -27,6 +27,7 @@ import { SizeableDirective } from './shared/sizeable.directive';
 import { MvdComponent } from './mvd.component';
 import { AuthenticationModule } from '../../authentication-manager/authentication-manager.module';
 import { PersonalizationComponent } from '../mvd-window-manager/personalization-panel/personalization-panel.component';
+import { HelpWidgetModule } from '../../help-widget/help-widget.module';
 
 @NgModule({
   imports: [
@@ -34,7 +35,8 @@ import { PersonalizationComponent } from '../mvd-window-manager/personalization-
     AuthenticationModule,
     CommonModule,
     SharedModule,
-    LaunchbarModule
+    LaunchbarModule,
+    HelpWidgetModule
   ],
   declarations: [
     DesktopComponent,

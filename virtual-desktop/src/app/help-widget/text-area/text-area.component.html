@@ -1,0 +1,12 @@
+<label>
+  <textarea
+    rows="2"
+    cols="10"
+    class="text-area"
+    [style.top] = position.y
+    [style.left] = position.x
+    (click)="$event.stopPropagation()"
+    [(ngModel)]="text"
+  >
+  </textarea>
+</label>
