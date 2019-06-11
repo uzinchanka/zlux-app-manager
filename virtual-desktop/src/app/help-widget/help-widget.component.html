@@ -34,6 +34,8 @@
 
 <ng-template #wizardInit>
 
+    <!-- <button [ibmButton]="secondary" [size]="normal">Button</button> -->
+
     <div class="stepper-block">
       <div class="label">
         STEP GUIDES
@@ -145,6 +147,7 @@
 <div #stepTooltip class="stepper-tooltip" [style.visibility]="isShownStepTooltip ? 'visible' : 'hidden'">
     <ng-container *ngTemplateOutlet="(isEditStepMode || isAddStepMode) ? editTooltipMode : viewTooltipMode">
     </ng-container>
+    
 </div>
 
 <ng-template #viewTooltipMode>

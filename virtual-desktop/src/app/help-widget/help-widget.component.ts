@@ -1,6 +1,7 @@
 import { RoundButtonComponent } from './round-button/round-button.component';
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { CanvasDrawerComponent } from './canvas-drawer/canvas-drawer.component';
+import { PluginManager } from 'zlux-base/plugin-manager/plugin-manager'
 
 interface Stepper {
   id: number;
@@ -84,6 +85,9 @@ export class HelpWidgetComponent implements OnInit {
   wizardsClicked() {
     this.isViewStepMode = false;
     this.isShownMenu = !this.isShownMenu;
+
+    //ZoweZLUX.pluginManager.pluginsById;
+
   }
 
   // HELP
