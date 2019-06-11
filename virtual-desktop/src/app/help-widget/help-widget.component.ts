@@ -82,9 +82,14 @@ export class HelpWidgetComponent implements OnInit {
     this.izCanvasDrawer.capture();
   }
 
+  closeMenu() {
+    this.isShownMenu = !this.isShownMenu;
+  }
+
   wizardsClicked() {
     this.isViewStepMode = false;
     this.isShownMenu = !this.isShownMenu;
+    this.toggleShowButtons();
 
     //ZoweZLUX.pluginManager.pluginsById;
 
@@ -314,9 +319,10 @@ export class HelpWidgetComponent implements OnInit {
     currentElement.classList.add('chosen');
 
     // get current stepDescription from step
-    this.getCurrentStepDescription(step);
+    this.getCurrentStepDescription(step);    
+  }
 
-    
+  onDeleteStepClick(step) {
     
   }
 
@@ -401,6 +407,10 @@ export class HelpWidgetComponent implements OnInit {
     this.isEditMode = true;
     this.isInitMode = false;
     
+  }
+
+  onDeleteStepperClick(stepper) {
+
   }
 
   // generate step selector

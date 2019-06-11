@@ -61,17 +61,22 @@
                 </svg> 
               </span>
 
+              <span class="delete-step" (click)="onDeleteStepperClick(stepper)">
+                <svg width="18" height="16" viewBox="0 0 18 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M4.90176 12.6667C4.90176 13.4 5.55668 14 6.35713 14H12.1786C12.9791 14 13.634 13.4 13.634 12.6667V4.66667H4.90176V12.6667ZM6.35713 6H12.1786V12.6667H6.35713V6ZM11.8148 2.66667L11.0871 2H7.44866L6.72098 2.66667H4.17407V4H14.3617V2.66667H11.8148Z" fill="black"/>
+                </svg>
+              </span>
+
             </div>
             
           </div>
         </ng-container>
       </div>
 
-      <div class="steppers-container">
-        <button class="add-stepper-btn" (click)="onAddStepperClick()">
-          ADD NEW STEPPER
-        </button>
-      </div>
+      <button class="add-stepper-btn" (click)="onAddStepperClick()">
+        Add new guide +
+      </button>
+
     </div>
 
     <!-- <div class="points-block">
@@ -87,13 +92,14 @@
 
 <ng-template #wizardCreation>
 
-    <div class="stepper-name">
-      <input id="stepperName" [(ngModel)]="currentStepperName" />
-    </div>
-
     <div class="stepper-block">
+
       <div class="label">
-        CHOSEN STEPS
+        NEW GUIDE
+      </div>
+
+      <div class="stepper-name">
+        <input id="stepperName" [(ngModel)]="currentStepperName" placeholder="Guide name"/>
       </div>
 
       <div class="steppers-container">
@@ -118,21 +124,30 @@
                 </svg> 
               </span>
 
+              <span class="delete-step" (click)="onDeleteStepClick(step)">
+                <svg width="18" height="16" viewBox="0 0 18 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M4.90176 12.6667C4.90176 13.4 5.55668 14 6.35713 14H12.1786C12.9791 14 13.634 13.4 13.634 12.6667V4.66667H4.90176V12.6667ZM6.35713 6H12.1786V12.6667H6.35713V6ZM11.8148 2.66667L11.0871 2H7.44866L6.72098 2.66667H4.17407V4H14.3617V2.66667H11.8148Z" fill="black"/>
+                </svg>
+              </span>
+
             </div>
             
           </div>
 
         </ng-container>
 
-        <button class="add-stepper-btn" (click)="onAddNewStepClick()">
-          ADD NEW STEP
-        </button>
       </div>
 
       <div class="action-block">
-        <button class="add-stepper-btn" (click)="onFinishStepper()">
-          SAVE GUIDE
-        </button>
+        <div class="btn-container">
+          <button class="save-stepper-btn" (click)="onFinishStepper()">
+              Save guide
+            </button>
+    
+            <button class="add-step-btn" (click)="onAddNewStepClick()">
+              Add new step +
+            </button>
+        </div> 
       </div>
 
     </div>
@@ -140,6 +155,13 @@
 </ng-template>
 
 <div #helpMenu class="help-menu" [style.visibility]="isShownMenu ? 'visible' : 'hidden'">
+
+  <div class="close" (click)="closeMenu()">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12.6666 4.27325L11.7266 3.33325L7.99998 7.05992L4.27331 3.33325L3.33331 4.27325L7.05998 7.99992L3.33331 11.7266L4.27331 12.6666L7.99998 8.93992L11.7266 12.6666L12.6666 11.7266L8.93998 7.99992L12.6666 4.27325Z" fill="black"/>
+    </svg>
+  </div>
+
   <ng-container *ngTemplateOutlet="isInitMode ? wizardInit : wizardCreation">
   </ng-container>
 </div>
@@ -151,27 +173,27 @@
 </div>
 
 <ng-template #viewTooltipMode>
-
-  <div class="description-block">
-    {{ stepDescription }}
+  <div class="tt-container">
+    <div class="description-block">
+      {{ stepDescription }}
+    </div>
+  
+    <div class="actions-block">
+      <button class="finish-guide" (click)="finishGuideStepClick()">Finish guide</button>
+      <button class="next-step" (click)="nextStepClick()" *ngIf="(!isLastStep && isShownStepTooltip)">Next</button>
+    </div>
   </div>
-
-  <div class="actions-block">
-    <button class="finish-guide" (click)="finishGuideStepClick()">Finish guide</button>
-    <button class="next-step" (click)="nextStepClick()" [style.visibility]="(!isLastStep && isShownStepTooltip) ? 'visible' : 'hidden'">Next</button>
-  </div>
-
 </ng-template>
 
 <ng-template #editTooltipMode>
+  <div class="tt-container">
+    <div class="description-block">
+      <textarea [(ngModel)]="stepDescription" name="textarea"></textarea>
+    </div>
 
-  <div class="description-block">
-    <textarea [(ngModel)]="stepDescription" name="textarea"></textarea>
+    <div class="actions-block">
+      <button class="cancel-step" (click)="cancelAddStepClick()">Cancel</button>
+      <button class="add-step" (click)="addStepClick()">Save</button>
+    </div>
   </div>
-
-  <div class="actions-block">
-    <button class="cancel-step" (click)="cancelAddStepClick()">Cancel</button>
-    <button class="add-step" (click)="addStepClick()">Save</button>
-  </div>
-
 </ng-template>
