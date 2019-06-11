@@ -17,7 +17,8 @@ interface Step {
 
 @Component({
   selector: 'help-widget',
-  templateUrl: './help-widget.component.html'
+  templateUrl: './help-widget.component.html',
+  styleUrls: ['./help-widget.component.scss']
 })
 export class HelpWidgetComponent implements OnInit {
 
