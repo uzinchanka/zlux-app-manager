@@ -412,18 +412,15 @@ export class HelpWidgetComponent implements OnInit {
       // if it is -> add :nth-child(n) to selector
 
       let siblings = currentElem.parentNode.children;
-      // let index = -1;
-      // if (siblings.length > 1) {
-      //   index = Array.from(siblings).indexOf(currentElem);
-      // }
 
       let index = 0;
       if (siblings.length > 1) {
         for (let j = 0; j < siblings.length; j++) {
           let element = siblings[j];
-          if ((((element = element.previousSibling) != null) && currentElem.nodeName == element.nodeName) ) {
-            index++;
-          } 
+          index++;
+          if (currentElem == element) {
+            break;
+          }
         }
       }
 
