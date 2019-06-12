@@ -21,13 +21,15 @@
     flex: 1;
     height: 100%;
     .canvas-sandbox {
+      &.active {
+        background-color: transparent;
+      }
       display: flex;
       width: 80%;
       height: 80%;
       justify-content: center;
       align-items: center;
-      border: 1px solid white;
-      background-color: #ffffff;
+      background-color: white;
     }
     .action-panel {
       margin: 16px;
@@ -49,21 +51,20 @@
           outline: 0;
         }
         &.text-tool {
-          background-image: url(../../../assets/cursors/text.svg);
+          background-image: url(../../../assets/images/help-widget/text.svg);
         }
         &.marker-tool {
-          background-image: url(../../../assets/cursors/marker.svg);
+          background-image: url(../../../assets/images/help-widget/marker.svg);
         }
         &.stepper-tool {
-          background-image: url(../../../assets/cursors/stepper.svg);
+          background-image: url(../../../assets/images/help-widget/stepper.svg);
         }
         &.pen-tool {
-          background-image: url(../../../assets/cursors/pen.svg);
+          background-image: url(../../../assets/images/help-widget/pen.svg);
         }
       }
     }
     .iz-screenshot-loading {
-      flex: 1;
       @-webkit-keyframes rotate {
         0% {
           -webkit-transform: rotate(0deg);

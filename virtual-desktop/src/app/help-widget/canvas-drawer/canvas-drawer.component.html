@@ -1,6 +1,6 @@
 <div class="canvas-drawer" *ngIf="showReporter" (click)="destroyDrawer()">
   <div class="work-area">
-    <div class="canvas-sandbox">
+    <div class="canvas-sandbox" [ngClass]="{'active':!isScreenshotLoading}">
       <div
         id="izCanvas"
         (click)="$event.stopPropagation()"
