@@ -146,6 +146,7 @@ export class HelpWidgetComponent implements OnInit {
     document.body.addEventListener("mouseover", function(e) {
 
       e.stopPropagation();
+      e.preventDefault();
 
       if (!self.isShownOverlay || self.isEditStepMode || self.isShownStepTooltip 
           || (self.isShownStepTooltip && !self.isViewStepMode)) return;
@@ -170,18 +171,19 @@ export class HelpWidgetComponent implements OnInit {
 
       self.previousElement = targetElem;
 
-      targetElem.addEventListener("click", function(e) {
+      targetElem.addEventListener("click", function(ev) {
 
-        e.stopPropagation();
+        ev.stopPropagation();
+        ev.preventDefault();
 
         let tooltip = self.stepTooltip.nativeElement;
 
         if (
-          e.target == tooltip || tooltip.contains(e.target) ||
-          (self.helpMenu && (e.target == <any>self.helpMenu.nativeElement || (<any>self.helpMenu.nativeElement).contains(e.target))) ||
-          (self.wizardButton && (e.target == <any>self.wizardButton.nativeElement || (<any>self.wizardButton.nativeElement).contains(e.target))) ||
-          (self.reportButton && (e.target == <any>self.reportButton.nativeElement || (<any>self.reportButton.nativeElement).contains(e.target))) ||
-          (self.helpButton && (e.target == <any>self.helpButton.nativeElement || (<any>self.helpButton.nativeElement).contains(e.target)))
+          ev.target == tooltip || tooltip.contains(ev.target) ||
+          (self.helpMenu && (ev.target == <any>self.helpMenu.nativeElement || (<any>self.helpMenu.nativeElement).contains(ev.target))) ||
+          (self.wizardButton && (ev.target == <any>self.wizardButton.nativeElement || (<any>self.wizardButton.nativeElement).contains(ev.target))) ||
+          (self.reportButton && (ev.target == <any>self.reportButton.nativeElement || (<any>self.reportButton.nativeElement).contains(ev.target))) ||
+          (self.helpButton && (ev.target == <any>self.helpButton.nativeElement || (<any>self.helpButton.nativeElement).contains(ev.target)))
         ) return;
 
         let rect = (<any>targetElem).getBoundingClientRect();
