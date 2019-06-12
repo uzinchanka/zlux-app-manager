@@ -61,12 +61,13 @@ export class LaunchbarMenuComponent {
    getAppPropertyInformation(plugin: DesktopPluginDefinitionImpl):any{
     const pluginImpl:DesktopPluginDefinitionImpl = plugin as DesktopPluginDefinitionImpl;
     const basePlugin = pluginImpl.getBasePlugin();
-    return {"isPropertyWindow":true,
-    "appName":pluginImpl.defaultWindowTitle,
-    "appVersion":basePlugin.getVersion(),
-    "appType":basePlugin.getType(),
-    "copyright":pluginImpl.getCopyright(),
-    "image":plugin.image
+    return {
+      "isPropertyWindow":true,
+      "appName":pluginImpl.defaultWindowTitle,
+      "appVersion":basePlugin.getVersion(),
+      "appType":basePlugin.getType(),
+      "copyright":pluginImpl.getCopyright(),
+      "image":plugin.image
     };    
   }
   

@@ -35,21 +35,12 @@ export class HelpWidgetComponent implements OnInit {
   @ViewChild('izCanvasDrawer')
   izCanvasDrawer: CanvasDrawerComponent;
 
-
-  plugins: Plugin[] = [{ id: '2', name: 'Plugin 1', steppers: [
-    {
-      id: '0',
-      name: 'Stepper 1',
-      steps: []
-    }
-  ] }];
-
   // HELP
 
   previousElement: any;
   previousElemStyle: any;
 
-  steppers: Stepper[] = [];
+  plugins: Plugin[];
 
   @ViewChild('helpMenu') helpMenu;
   
@@ -95,10 +86,11 @@ export class HelpWidgetComponent implements OnInit {
 
   constructor(private stepperService: StepperService) {
     this.showButtons = false;
-    // this.stepperService.getSteppersForInstalledPlugins().then((steppers)=>{
-    //   this.steppers = steppers;
-    //   console.log('I am steppers', this.steppers);
-    // });
+
+    this.stepperService.getSteppersForInstalledPlugins().then((plugins)=>{
+      this.plugins = plugins;
+      console.log('I am plugins', this.plugins);
+    });
   }
 
   toggleShowButtons() {
@@ -111,14 +103,15 @@ export class HelpWidgetComponent implements OnInit {
 
   closeMenu() {
     this.isShownMenu = !this.isShownMenu;
+    this.isShownOverlay = false;
   }
 
   hide(event) {
-    event.target.classList.add('hide');
+    event.target.parentElement.classList.add('hide');
   }
 
   show(event) {
-    event.target.classList.remove('hide');
+    event.target.parentElement.classList.remove('hide');
   }
 
   wizardsClicked() {
@@ -148,10 +141,6 @@ export class HelpWidgetComponent implements OnInit {
     this.stepTooltip.nativeElement.style.top = rect.top + rect.height + this.tooltipOffsetTop + 'px';
   }
   ngOnInit() {
-
-    // this.plugins = [
-      
-    // ];
 
     var self = this;
     document.body.addEventListener("mouseover", function(e) {
@@ -232,8 +221,6 @@ export class HelpWidgetComponent implements OnInit {
       steps: []
     };
 
-    this.currentPlugin.steppers.push(this.currentStepper);
-
   }
 
 
@@ -260,7 +247,7 @@ export class HelpWidgetComponent implements OnInit {
     if (this.currentStepper.steps.length) {
 
       if (this.isCreationMode) {
-        this.steppers.push(this.currentStepper);
+        this.currentPlugin.steppers.push(this.currentStepper);
       } else if (this.isEditMode) {
         // get stepper from array by id
 
@@ -319,6 +306,8 @@ export class HelpWidgetComponent implements OnInit {
   }
 
   onViewStepClick(step) {
+
+    if (!step) return;
 
     this.isLastStep = false;
 
@@ -448,7 +437,11 @@ export class HelpWidgetComponent implements OnInit {
   }
 
   // STEPPER
-  onViewStepperClick(stepper) {
+  onViewStepperClick(stepper: Stepper) {
+
+    this.currentStepper = stepper;
+    this.onViewStepClick(stepper.steps[0]);
+
 
   }
 

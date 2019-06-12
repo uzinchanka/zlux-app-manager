@@ -71,7 +71,7 @@
             <div class="name">
               {{ stepper.name }}
             </div>
-            <div class="actions" (mouseover)="show($event)" (mouseleave)="hide($event)">
+            <div class="actions"> <!-- (mouseover)="show($event)" (mouseleave)="hide($event)" -->
 
               <span class="view-step" (click)="onViewStepperClick(stepper)">
                 <svg width="22" height="20" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -134,7 +134,7 @@
             <div class="description">
               {{ step.description }}
             </div>
-            <div class="actions"(mouseover)="show($event)" (mouseleave)="hide($event)">
+            <div class="actions">  <!--  (mouseover)="show($event)" (mouseleave)="hide($event)" -->
 
               <span class="view-step" (click)="onViewStepClick(step)">
                 <svg width="22" height="20" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -179,6 +179,10 @@
 </ng-template>
 
 <div #helpMenu class="help-menu" [style.visibility]="isShownMenu ? 'visible' : 'hidden'">
+
+
+  <div *ngIf="(isInitMode && !currentPlugin.steppers.length) || (isCreationMode && !currentStepper.steps.length)"  
+    class="no-data">No data</div>
 
   <div class="close" (click)="closeMenu()">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
