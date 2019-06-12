@@ -4,7 +4,7 @@ import {
   ViewChild,
   ViewContainerRef
 } from '@angular/core';
-import html2canvas from 'html2canvas';
+import * as html2canvas from 'html2canvas';
 import {fromEvent, Observable, Subscription} from 'rxjs';
 import {pairwise, switchMap, takeUntil, tap} from 'rxjs/operators';
 import {TextAreaComponent} from '../text-area/text-area.component';
@@ -30,7 +30,7 @@ export class CanvasDrawerComponent {
   private $currentTool: Subscription;
 
   componentRef: any;
-  @ViewChild('canvasContainer', {read: ViewContainerRef, static: false}) entry: ViewContainerRef;
+  @ViewChild('canvasContainer', {read: ViewContainerRef}) entry: ViewContainerRef;
 
   constructor(
     private resolver: ComponentFactoryResolver,
@@ -75,7 +75,7 @@ export class CanvasDrawerComponent {
 
   capture() {
     this.showReporter = true;
-    // this.isScreenshotLoading = true;
+    this.isScreenshotLoading = true;
 
     Promise.all([
       html2canvas(document.documentElement, {
@@ -101,9 +101,9 @@ export class CanvasDrawerComponent {
           const {x, y}: DOMRect = this.iframe.getBoundingClientRect() as DOMRect;
           this.cx.drawImage(iframeCanvas, x * 0.8, y * 0.8, iframeWidth * 0.8, iframeHeight * 0.8);
         }
-        // this.isScreenshotLoading = false;
+        this.isScreenshotLoading = false;
         console.log(document.querySelector('#izCanvas'));
-        // document.querySelector('#izCanvas').appendChild(reportCanvas);
+        document.querySelector('#izCanvas').appendChild(reportCanvas);
         this.canvas = reportCanvas;
       });
   }

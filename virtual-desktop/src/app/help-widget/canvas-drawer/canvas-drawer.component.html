@@ -6,7 +6,7 @@
         (click)="$event.stopPropagation()"
         [ngClass]="cursorClass"
       >
-        <div *ngIf="!isScreenshotLoading" class="iz-screenshot-loading">
+        <div *ngIf="isScreenshotLoading" class="iz-screenshot-loading">
           <div data-loading class="bx--loading">
             <svg class="bx--loading__svg" viewBox="-75 -75 150 150">
               <title>Loading</title>
