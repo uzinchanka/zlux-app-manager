@@ -221,7 +221,7 @@ export class HelpWidgetComponent implements OnInit {
     if (this.currentStepper.steps.length) {
 
       if (this.isCreationMode) {
-        this.steppers.push(this.currentStepper);
+        this.plugins[0].steppers.push(this.currentStepper);
       } else if (this.isEditMode) {
         // get stepper from array by id
 
