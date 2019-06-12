@@ -51,6 +51,7 @@ export class CanvasDrawerComponent {
     const factory = this.resolver.resolveComponentFactory(TextAreaComponent);
     this.componentRef = this.entry.createComponent(factory);
     this.componentRef.instance.position = position;
+    this.componentRef.instance.focus();
   }
 
   destroyComponent() {
