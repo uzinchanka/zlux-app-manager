@@ -66,6 +66,11 @@
       </div>
 
       <div class="steppers-container">
+
+        
+        <div *ngIf="(isInitMode && !currentPlugin.steppers.length) || (isCreationMode && !currentStepper.steps.length)"  
+          class="no-data">No data</div>
+
         <ng-container *ngFor="let stepper of currentPlugin.steppers">
           <div class="stepper">
             <div class="name">
@@ -128,6 +133,9 @@
 
       <div class="steppers-container">
 
+        <div *ngIf="(isInitMode && !currentPlugin.steppers.length) || (isCreationMode && !currentStepper.steps.length)"  
+          class="no-data">No data</div>
+
         <ng-container *ngFor="let step of currentStepper.steps">
 
           <div class="step">
@@ -179,10 +187,6 @@
 </ng-template>
 
 <div #helpMenu class="help-menu" [style.visibility]="isShownMenu ? 'visible' : 'hidden'">
-
-
-  <div *ngIf="(isInitMode && !currentPlugin.steppers.length) || (isCreationMode && !currentStepper.steps.length)"  
-    class="no-data">No data</div>
 
   <div class="close" (click)="closeMenu()">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
