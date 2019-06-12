@@ -3,6 +3,12 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { CanvasDrawerComponent } from './canvas-drawer/canvas-drawer.component';
 import { StepperService } from './service/stepper.service';
 
+export interface Plugin {
+  id: string;
+  name: string;
+  steppers: Stepper[];
+}
+
 export interface Stepper {
   id: string;
   name: string;
@@ -33,7 +39,7 @@ export class HelpWidgetComponent implements OnInit {
   previousElement: any;
   previousElemStyle: any;
 
-  steppers: Stepper[] = [];
+  plugins: Plugin[];
 
   @ViewChild('helpMenu') helpMenu;
   
@@ -75,9 +81,9 @@ export class HelpWidgetComponent implements OnInit {
 
   constructor(private stepperService: StepperService) {
     this.showButtons = false;
-    this.stepperService.getSteppersForInstalledPlugins().then((steppers)=>{
-      this.steppers = steppers;
-      console.log('I am steppers', this.steppers);
+    this.stepperService.getSteppersForInstalledPlugins().then((plugins)=>{
+      this.plugins = plugins;
+      console.log('I am plugins', this.plugins);
     });
   }
 
