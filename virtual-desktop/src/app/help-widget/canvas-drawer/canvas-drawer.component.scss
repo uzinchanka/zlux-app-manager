@@ -14,13 +14,16 @@
     margin-right: 10px;
   }
   .work-area {
-    width: 80%;
-    height: 80%;
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    height: 100%;
     .canvas-sandbox {
       display: flex;
-      flex: 1;
+      width: 80%;
+      height: 80%;
       justify-content: center;
       align-items: center;
       border: 1px solid white;
@@ -29,6 +32,7 @@
     .action-panel {
       margin: 16px;
       padding: 10px;
+      width: 70%;
       background-color: white;
       .iz-tool {
         height: 30px;
@@ -244,46 +248,6 @@
 
       .bx--loading-overlay--stop {
         display: none;
-      }
-
-      .action-panel {
-        margin: 16px;
-        padding: 10px;
-        background-color: white;
-
-        .iz-tool {
-          height: 30px;
-          width: 30px;
-          background-repeat: no-repeat;
-          background-position: center;
-          border: none;
-          margin-left: 10px;
-
-          &:hover, &.active {
-            background-color: #cccccc;
-            border-radius: 6px;
-          }
-
-          &:active, &:focus {
-            outline: 0;
-          }
-
-          &.text-tool {
-            background-image: url(../../../assets/cursors/text.svg);
-          }
-
-          &.marker-tool {
-            background-image: url(../../../assets/cursors/marker.svg);
-          }
-
-          &.stepper-tool {
-            background-image: url(../../../assets/cursors/stepper.svg);
-          }
-
-          &.pen-tool {
-            background-image: url(../../../assets/cursors/pen.svg);
-          }
-        }
       }
     }
   }
