@@ -1,7 +1,20 @@
 <div class="canvas-drawer" *ngIf="showReporter" (click)="destroyDrawer()">
   <div class="work-area">
     <div class="canvas-sandbox">
-      <div id="izCanvas" #izCanvas (click)="$event.stopPropagation()" [ngClass]="cursorClass"></div>
+      <div
+        id="izCanvas"
+        (click)="$event.stopPropagation()"
+        [ngClass]="cursorClass"
+      >
+        <div *ngIf="!isScreenshotLoading" class="iz-screenshot-loading">
+          <div data-loading class="bx--loading">
+            <svg class="bx--loading__svg" viewBox="-75 -75 150 150">
+              <title>Loading</title>
+              <circle class="bx--loading__stroke" cx="0" cy="0" r="37.5"/>
+            </svg>
+          </div>
+        </div>
+      </div>
       <div #canvasContainer></div>
     </div> 
     <div class="action-panel" (click)="$event.stopPropagation()">

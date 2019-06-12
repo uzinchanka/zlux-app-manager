@@ -7,57 +7,284 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: rgba(0,0,0,0.5);
-  .action-panel {
-    margin: 16px;
-    padding: 10px;
-    background-color: white;
-    .iz-tool {
-      height: 30px;
-      width: 30px;
-      background-repeat: no-repeat;
-      background-position: center;
-      border: none;
-      margin-left: 10px;
-      &:hover, &.active {
-        background-color: #cccccc;
-        border-radius: 6px;
+  background-color: rgba(0, 0, 0, 0.5);
+  .send-button {
+    float: right;
+    padding: 9px;
+    margin-right: 10px;
+  }
+  .work-area {
+    width: 80%;
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    .canvas-sandbox {
+      display: flex;
+      flex: 1;
+      justify-content: center;
+      align-items: center;
+      border: 1px solid white;
+      background-color: #ffffff;
+    }
+    .action-panel {
+      margin: 16px;
+      padding: 10px;
+      background-color: white;
+      .iz-tool {
+        height: 30px;
+        width: 30px;
+        background-repeat: no-repeat;
+        background-position: center;
+        border: none;
+        margin-left: 10px;
+        &:hover, &.active {
+          background-color: #cccccc;
+          border-radius: 6px;
+        }
+        &:active, &:focus {
+          outline: 0;
+        }
+        &.text-tool {
+          background-image: url(../../../assets/cursors/text.svg);
+        }
+        &.marker-tool {
+          background-image: url(../../../assets/cursors/marker.svg);
+        }
+        &.stepper-tool {
+          background-image: url(../../../assets/cursors/stepper.svg);
+        }
+        &.pen-tool {
+          background-image: url(../../../assets/cursors/pen.svg);
+        }
       }
-      &:active, &:focus {
-        outline: 0;
+    }
+    .iz-screenshot-loading {
+      flex: 1;
+      @-webkit-keyframes rotate {
+        0% {
+          -webkit-transform: rotate(0deg);
+          transform: rotate(0deg);
+        }
+        100% {
+          -webkit-transform: rotate(360deg);
+          transform: rotate(-360deg);
+        }
       }
-      &.text-tool {
-        background-image: url(../../../assets/images/help-widget/text.svg);
+
+      @keyframes rotate {
+        0% {
+          -webkit-transform: rotate(0deg);
+          transform: rotate(0deg);
+        }
+        100% {
+          -webkit-transform: rotate(-360deg);
+          transform: rotate(360deg);
+        }
       }
-      &.marker-tool {
-        background-image: url(../../../assets/images/help-widget/marker.svg);
+
+      @-webkit-keyframes rotate-end-p1 {
+        100% {
+          -webkit-transform: rotate(360deg);
+          transform: rotate(360deg);
+        }
       }
-      &.stepper-tool {
-        background-image: url(../../../assets/images/help-widget/stepper.svg);
+
+      @keyframes rotate-end-p1 {
+        100% {
+          -webkit-transform: rotate(360deg);
+          transform: rotate(360deg);
+        }
       }
-      &.pen-tool {
-        background-image: url(../../../assets/images/help-widget/pen.svg);
+
+      @-webkit-keyframes rotate-end-p2 {
+        100% {
+          -webkit-transform: rotate(-360deg);
+          transform: rotate(-360deg);
+        }
+      }
+
+      @keyframes rotate-end-p2 {
+        100% {
+          -webkit-transform: rotate(360deg);
+          transform: rotate(360deg);
+        }
+      }
+
+      /* Stroke animations */
+      @-webkit-keyframes init-stroke {
+        0% {
+          stroke-dashoffset: 240;
+        }
+        100% {
+          stroke-dashoffset: 40;
+        }
+      }
+      @keyframes init-stroke {
+        0% {
+          stroke-dashoffset: 240;
+        }
+        100% {
+          stroke-dashoffset: 40;
+        }
+      }
+
+      @-webkit-keyframes stroke-end {
+        0% {
+          stroke-dashoffset: 40;
+        }
+        100% {
+          stroke-dashoffset: 240;
+        }
+      }
+
+      @keyframes stroke-end {
+        0% {
+          stroke-dashoffset: 40;
+        }
+        100% {
+          stroke-dashoffset: 240;
+        }
+      }
+
+      .bx--loading {
+        -webkit-animation-name: rotate;
+        animation-name: rotate;
+        -webkit-animation-duration: 690ms;
+        animation-duration: 690ms;
+        -webkit-animation-timing-function: linear;
+        animation-timing-function: linear;
+        -webkit-animation-fill-mode: forwards;
+        animation-fill-mode: forwards;
+        -webkit-animation-iteration-count: infinite;
+        animation-iteration-count: infinite;
+        width: 10.5rem;
+        height: 10.5rem;
+      }
+
+      .bx--loading svg circle {
+        -webkit-animation-name: init-stroke;
+        animation-name: init-stroke;
+        -webkit-animation-duration: 10ms;
+        animation-duration: 10ms;
+        -webkit-animation-timing-function: cubic-bezier(0.2, 0, 0.38, 0.9);
+        animation-timing-function: cubic-bezier(0.2, 0, 0.38, 0.9);
+      }
+
+      .bx--loading__svg {
+        fill: transparent;
+      }
+
+      .bx--loading__svg circle {
+        stroke-width: 8;
+        stroke-linecap: butt;
+        stroke-dasharray: 240;
+      }
+
+      .bx--loading__stroke {
+        stroke: #0062ff;
+        stroke-dashoffset: 40;
+      }
+
+      .bx--loading--stop {
+        -webkit-animation: rotate-end-p1 700ms cubic-bezier(0.2, 0, 1, 0.9) forwards, rotate-end-p2 700ms cubic-bezier(0.2, 0, 1, 0.9) 700ms forwards;
+        animation: rotate-end-p1 700ms cubic-bezier(0.2, 0, 1, 0.9) forwards, rotate-end-p2 700ms cubic-bezier(0.2, 0, 1, 0.9) 700ms forwards;
+      }
+
+      .bx--loading--stop svg circle {
+        -webkit-animation-name: stroke-end;
+        animation-name: stroke-end;
+        -webkit-animation-duration: 700ms;
+        animation-duration: 700ms;
+        -webkit-animation-timing-function: cubic-bezier(0.2, 0, 1, 0.9);
+        animation-timing-function: cubic-bezier(0.2, 0, 1, 0.9);
+        -webkit-animation-delay: 700ms;
+        animation-delay: 700ms;
+        -webkit-animation-fill-mode: forwards;
+        animation-fill-mode: forwards;
+      }
+
+      .bx--loading--small {
+        width: 2rem;
+        height: 2rem;
+      }
+
+      .bx--loading--small circle {
+        stroke-width: 12;
+      }
+
+      .bx--loading--small .bx--loading__svg {
+        stroke: #0062ff;
+      }
+
+      .bx--loading__background {
+        stroke: #dcdcdc;
+        stroke-dashoffset: 0;
+      }
+
+      .bx--loading-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        background-color: rgba(255, 255, 255, 0.6);
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        -webkit-transition: background-color 720ms cubic-bezier(0.4, 0.14, 0.3, 1);
+        transition: background-color 720ms cubic-bezier(0.4, 0.14, 0.3, 1);
+        z-index: 8000;
+      }
+
+      .bx--loading-overlay--stop {
+        display: none;
+      }
+
+      .action-panel {
+        margin: 16px;
+        padding: 10px;
+        background-color: white;
+
+        .iz-tool {
+          height: 30px;
+          width: 30px;
+          background-repeat: no-repeat;
+          background-position: center;
+          border: none;
+          margin-left: 10px;
+
+          &:hover, &.active {
+            background-color: #cccccc;
+            border-radius: 6px;
+          }
+
+          &:active, &:focus {
+            outline: 0;
+          }
+
+          &.text-tool {
+            background-image: url(../../../assets/cursors/text.svg);
+          }
+
+          &.marker-tool {
+            background-image: url(../../../assets/cursors/marker.svg);
+          }
+
+          &.stepper-tool {
+            background-image: url(../../../assets/cursors/stepper.svg);
+          }
+
+          &.pen-tool {
+            background-image: url(../../../assets/cursors/pen.svg);
+          }
+        }
       }
     }
   }
-}
-.m-r-30 {
-  margin-right: 30px !important;
-}
-
-.iz-button {
-  font-size: 13px;
-  line-height: 15px;
-  float: right;
-  padding: 8px 16px;
-  margin-right: 10px;
-  border: 1px solid #0062FF;
-}
-.send-button {
-  background-color: #0062FF;
-  color: white;
-}
-.cancel-button {
-  background-color: transparent;
-  color: #0062FF;
 }

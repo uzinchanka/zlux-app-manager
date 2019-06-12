@@ -4,14 +4,11 @@ import {
   ViewChild,
   ViewContainerRef
 } from '@angular/core';
-// @ts-ignore
-import * as html2canvas from 'html2canvas';
-import {fromEvent, Subscription} from 'rxjs';
-import {pairwise, switchMap, takeUntil} from 'rxjs/operators';
+import html2canvas from 'html2canvas';
+import {fromEvent, Observable, Subscription} from 'rxjs';
+import {pairwise, switchMap, takeUntil, tap} from 'rxjs/operators';
 import {TextAreaComponent} from '../text-area/text-area.component';
 import {HttpClient} from '@angular/common/http';
-
-type Position = {x: string, y:string}
 
 @Component({
   selector: 'iz-canvas-drawer',
@@ -22,8 +19,10 @@ export class CanvasDrawerComponent {
 
   showReporter: boolean;
   markCounter: number;
-
+  iframe: HTMLIFrameElement;
   tool: string;
+
+  private isScreenshotLoading = false;
 
   private canvas: HTMLCanvasElement;
   private cx: CanvasRenderingContext2D;
@@ -31,7 +30,7 @@ export class CanvasDrawerComponent {
   private $currentTool: Subscription;
 
   componentRef: any;
-  @ViewChild('canvasContainer', {read: ViewContainerRef}) entry: ViewContainerRef;
+  @ViewChild('canvasContainer', {read: ViewContainerRef, static: false}) entry: ViewContainerRef;
 
   constructor(
     private resolver: ComponentFactoryResolver,
@@ -40,11 +39,11 @@ export class CanvasDrawerComponent {
     this.destroyDrawer();
   }
 
-  createComponent(position: Position) {
+  createComponent(position) {
     for (let i = 0; i < this.entry.length; i++) {
       const viewRef = this.entry.get(i);
       // @ts-ignore
-      if (viewRef && !viewRef._view.nodes[1].instance.text) {
+      if (!viewRef._view.nodes[1].instance.text) {
         viewRef.destroy();
       }
     }
@@ -61,19 +60,33 @@ export class CanvasDrawerComponent {
   destroyDrawer() {
     this.showReporter = false;
     this.markCounter = 0;
-    this.resetTool();
+  }
+
+  getIFrameCanvas() {
+    this.iframe = document.querySelector('iframe');
+
+    if (!this.iframe) {
+      return Promise.resolve(null);
+    }
+
+    const iframeDocument = this.iframe.contentDocument || this.iframe.contentWindow.document;
+    return html2canvas(iframeDocument.documentElement);
   }
 
   capture() {
     this.showReporter = true;
-    console.log('I am capture');
-    html2canvas(document.documentElement, {
-      allowTaint: true,
-      ignoreElements: (el: HTMLElement) => {
-        return el.classList.contains('iz-help-container');
-      }
-    })
-      .then((canvas: HTMLCanvasElement) => {
+    // this.isScreenshotLoading = true;
+
+    Promise.all([
+      html2canvas(document.documentElement, {
+        allowTaint: true,
+        ignoreElements: (el) => {
+          return el.classList.contains('iz-help-container');
+        }
+      }),
+      this.getIFrameCanvas(),
+    ])
+      .then(([canvas, iframeCanvas]) => {
         const reportCanvas = document.createElement('canvas');
         const pixelRatio = window.devicePixelRatio || 1;
         let {width, height} = canvas;
@@ -81,21 +94,23 @@ export class CanvasDrawerComponent {
         height = height / pixelRatio;
         reportCanvas.width = width * 0.8;
         reportCanvas.height = height * 0.8;
-        this.cx = reportCanvas.getContext('2d') || new CanvasRenderingContext2D();
+        this.cx = reportCanvas.getContext('2d');
         this.cx.drawImage(canvas, 0, 0, width * 0.8, height * 0.8);
-        document.querySelector('#izCanvas').appendChild(reportCanvas);
+        if (iframeCanvas) {
+          const {width: iframeWidth, height: iframeHeight} = iframeCanvas;
+          const {x, y}: DOMRect = this.iframe.getBoundingClientRect() as DOMRect;
+          this.cx.drawImage(iframeCanvas, x * 0.8, y * 0.8, iframeWidth * 0.8, iframeHeight * 0.8);
+        }
+        // this.isScreenshotLoading = false;
+        console.log(document.querySelector('#izCanvas'));
+        // document.querySelector('#izCanvas').appendChild(reportCanvas);
         this.canvas = reportCanvas;
       });
-    //     // this.canvas.nativeElement.this.canvas.nativeElement.src = canvas.toDataURL();
-    //     // this.downloadLink.nativeElement.href = canvas.toDataURL('image/png');
-    //     // this.downloadLink.nativeElement.download = 'marble-diagram.png';
-    //     // this.downloadLink.nativeElement.click();
-    //   });
   }
 
   stepperTool() {
-    this.resetTool();
     this.tool = 'stepper';
+    this.resetTool();
     this.$currentTool = fromEvent(this.canvas, 'click').subscribe((e: any) => {
       const x = e.clientX - e.target.offsetLeft;
       const y = e.clientY - e.target.offsetTop;
@@ -111,8 +126,8 @@ export class CanvasDrawerComponent {
   }
 
   penTool() {
-    this.resetTool();
     this.tool = 'pen';
+    this.resetTool();
     this.cx.lineWidth = 3;
     this.cx.lineCap = 'round';
     this.cx.strokeStyle = '#ff0000';
@@ -120,8 +135,8 @@ export class CanvasDrawerComponent {
   }
 
   markerTool() {
-    this.resetTool();
     this.tool = 'marker';
+    this.resetTool();
     this.cx.lineWidth = 15;
     this.cx.lineCap = 'butt';
     this.cx.strokeStyle = 'rgba(255,0,0,0.4)';
@@ -129,9 +144,9 @@ export class CanvasDrawerComponent {
   }
 
   textTool() {
-    this.resetTool();
     this.tool = 'text';
     console.log('onTextTool click');
+    this.resetTool();
     this.captureTextCreationEvent();
   }
 
@@ -187,23 +202,25 @@ export class CanvasDrawerComponent {
   }
 
   private resetTool() {
-    this.tool = '';
     this.$currentTool && this.$currentTool.unsubscribe();
   }
 
   private sendIssueReport() {
     const report = new IssueReport();
-    report.base64Img = this.canvas.toDataURL('image/jpg');
-    report.cc = 'dbarysevich@rocketsoftware.com, mtratseuski@rocketsoftware.com, uzinchanka@rocketsoftware.com';
-    report.to = 'dskachkou@rocketsoftware.com';
-    report.text = 'Yeah, it is issue reporting. You can find image in the attachments';
-    report.subject = 'IntroZ issue reporting';
+    html2canvas(document.querySelector('.canvas-sandbox'))
+      .then(canvas => {
+        report.base64Img = canvas.toDataURL('image/png');
+        report.cc = 'dbarysevich@rocketsoftware.com, mtratseuski@rocketsoftware.com, uzinchanka@rocketsoftware.com';
+        report.to = 'dskachkou@rocketsoftware.com';
+        report.text = 'Yeah, it is issue reporting. You can find image in the attachments';
+        report.subject = 'IntroZ issue reporting';
 
-    this.http.post('http://localhost:3000/issueReport', report)
-      .subscribe(
-        () => console.log('Report was sent'), // success path
-        error => console.log('Error!!!', error) // error path
-      );
+        this.http.post('http://localhost:3000/issueReport', report)
+          .subscribe(
+            () => console.log('Report was sent'),
+            error => console.log('Error!!!', error)
+          );
+      });
   }
 }
 
