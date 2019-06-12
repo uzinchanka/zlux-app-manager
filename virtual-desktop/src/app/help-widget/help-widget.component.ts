@@ -1,7 +1,14 @@
+
 import { RoundButtonComponent } from './round-button/round-button.component';
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { CanvasDrawerComponent } from './canvas-drawer/canvas-drawer.component';
 import { StepperService } from './service/stepper.service';
+
+export interface Plugin {
+  id: string;
+  name: string;
+  steppers: Stepper[];
+}
 
 export interface Stepper {
   id: string;
@@ -27,6 +34,15 @@ export class HelpWidgetComponent implements OnInit {
 
   @ViewChild('izCanvasDrawer')
   izCanvasDrawer: CanvasDrawerComponent;
+
+
+  plugins: Plugin[] = [{ id: '2', name: 'Plugin 1', steppers: [
+    {
+      id: '0',
+      name: 'Stepper 1',
+      steps: []
+    }
+  ] }];
 
   // HELP
 
@@ -54,7 +70,8 @@ export class HelpWidgetComponent implements OnInit {
   stepDescription: string;
 
   // menu modes
-  isInitMode: boolean = true;
+  isPluginsMode: boolean = true;
+  isInitMode: boolean = false;
   isCreationMode: boolean = false;
   isEditMode: boolean = false;
 
@@ -67,6 +84,9 @@ export class HelpWidgetComponent implements OnInit {
   currentStepperName: string;
   lastStepperId: number = 0;
 
+  // plugins
+  currentPlugin: Plugin;
+
   currentStep: Step;
   isLastStep: boolean = false;
   descSrc = require('../../assets/images/help-widget/description.svg');
@@ -75,10 +95,10 @@ export class HelpWidgetComponent implements OnInit {
 
   constructor(private stepperService: StepperService) {
     this.showButtons = false;
-    this.stepperService.getSteppersForInstalledPlugins().then((steppers)=>{
-      this.steppers = steppers;
-      console.log('I am steppers', this.steppers);
-    });
+    // this.stepperService.getSteppersForInstalledPlugins().then((steppers)=>{
+    //   this.steppers = steppers;
+    //   console.log('I am steppers', this.steppers);
+    // });
   }
 
   toggleShowButtons() {
@@ -93,6 +113,14 @@ export class HelpWidgetComponent implements OnInit {
     this.isShownMenu = !this.isShownMenu;
   }
 
+  hide(event) {
+    event.target.classList.add('hide');
+  }
+
+  show(event) {
+    event.target.classList.remove('hide');
+  }
+
   wizardsClicked() {
     this.isViewStepMode = false;
     this.isShownMenu = !this.isShownMenu;
@@ -104,11 +132,26 @@ export class HelpWidgetComponent implements OnInit {
 
   // HELP
 
+  backToPluginsClick() {
+    this.isPluginsMode = true;
+    this.isInitMode = false;
+  }
+
+  onPluginClick(plugin) {
+    this.isPluginsMode = false;
+    this.isInitMode = true;
+    this.currentPlugin = plugin;
+  }
+
   setTooltipPosition(rect) {
     this.stepTooltip.nativeElement.style.left = rect.left + 'px';
     this.stepTooltip.nativeElement.style.top = rect.top + rect.height + this.tooltipOffsetTop + 'px';
   }
   ngOnInit() {
+
+    // this.plugins = [
+      
+    // ];
 
     var self = this;
     document.body.addEventListener("mouseover", function(e) {
@@ -188,6 +231,8 @@ export class HelpWidgetComponent implements OnInit {
       name: '',
       steps: []
     };
+
+    this.currentPlugin.steppers.push(this.currentStepper);
 
   }
 

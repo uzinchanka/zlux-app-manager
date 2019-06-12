@@ -11,6 +11,10 @@
   font-size: 20px;
 }
 
+.hide {
+  display: none;
+}
+
 
 .help-menu {
   width: 350px;
@@ -26,6 +30,60 @@
     padding: 10px;
   }
 
+  .plugin-block {
+
+    .label {
+      padding-bottom: 10px;
+      padding-top: 5px;
+      padding: 20px;
+      font-size: 14px;
+      line-height: 18px;
+      text-transform: uppercase;
+      color: #939393;
+    }
+
+    .plugins-container {
+      padding-left: 20px;
+      padding-right: 20px;
+
+      .plugin {
+        display: flex;
+        padding-left: 10px;
+        padding-right: 10px;
+        margin-bottom: 5px;
+        width: 100%;
+        height: 30px;
+        box-sizing: border-box;
+        cursor: pointer;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: center;
+        align-items: center;
+        border-bottom: 1px solid #D3D3D3;
+  
+        .name {
+          width: 100%;
+          flex-grow: 1;
+        }
+  
+        .steppers-amount {
+          width: 20px;
+          background: #E9E9E9;
+          border: 1px solid #E9E9E9;
+          box-sizing: border-box;
+          border-radius: 20px;
+          display: flex;
+          justify-content: center;
+          height: 20px;
+          align-items: center;
+          font-size: 11px;
+          font-weight: bold;
+        }
+      } 
+    }
+  
+  }
+
   .stepper-block {
 
     .label {
@@ -36,6 +94,18 @@
       line-height: 18px;
       text-transform: uppercase;
       color: #939393;
+
+      .back-plugins {
+        padding-right: 3px;
+        cursor: pointer;
+        color: #0062FF;
+        font-weight: bold;
+
+        &:hover {
+          color: #2277ff;
+        }
+        
+      }
     }
 
     .stepper-name {

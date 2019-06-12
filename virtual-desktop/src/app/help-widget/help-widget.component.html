@@ -1,4 +1,4 @@
-<div class="iz-help-container">
+<div class="iz-help-container" *ngIf="!isShownOverlay">
   <round-button 
     #wizardButton
     *ngIf="showButtons" 
@@ -30,22 +30,48 @@
 
 <div id="overlay" [style.visibility]="isShownOverlay ? 'visible' : 'hidden'"></div>
 
+<ng-template #wizardPlugins>
+
+  <div class="plugin-block">
+    <div class="label">
+      PLUGINS
+    </div>
+
+    <div class="plugins-container">
+      <ng-container *ngFor="let plugin of plugins">
+
+        <div class="plugin" (click)="onPluginClick(plugin)">
+          <div class="name">
+            {{ plugin.name }}
+          </div>
+
+          <div class="steppers-amount">
+            {{ plugin.steppers.length }}
+          </div>
+        </div>
+
+      </ng-container>
+    </div>
+  </div>
+
+</ng-template>
+
 <ng-template #wizardInit>
 
     <!-- <button [ibmButton]="secondary" [size]="normal">Button</button> -->
 
     <div class="stepper-block">
       <div class="label">
-        STEP GUIDES
+        <span class="back-plugins" (click)="backToPluginsClick()">PLUGINS /</span>{{ currentPlugin?.name }}
       </div>
 
       <div class="steppers-container">
-        <ng-container *ngFor="let stepper of steppers">
+        <ng-container *ngFor="let stepper of currentPlugin.steppers">
           <div class="stepper">
             <div class="name">
               {{ stepper.name }}
             </div>
-            <div class="actions">
+            <div class="actions" (mouseover)="show($event)" (mouseleave)="hide($event)">
 
               <span class="view-step" (click)="onViewStepperClick(stepper)">
                 <svg width="22" height="20" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -108,7 +134,7 @@
             <div class="description">
               {{ step.description }}
             </div>
-            <div class="actions">
+            <div class="actions"(mouseover)="show($event)" (mouseleave)="hide($event)">
 
               <span class="view-step" (click)="onViewStepClick(step)">
                 <svg width="22" height="20" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -160,8 +186,16 @@
     </svg>
   </div>
 
-  <ng-container *ngTemplateOutlet="isInitMode ? wizardInit : wizardCreation">
+  <ng-container *ngIf="isInitMode" >
+    <ng-container *ngTemplateOutlet="wizardInit"></ng-container>
   </ng-container>
+  <ng-container *ngIf="isCreationMode">
+    <ng-container *ngTemplateOutlet="wizardCreation"></ng-container>
+  </ng-container>
+  <ng-container *ngIf="isPluginsMode">
+    <ng-container *ngTemplateOutlet="wizardPlugins"></ng-container>
+  </ng-container>
+
 </div>
 
 <div #stepTooltip class="stepper-tooltip" [style.visibility]="isShownStepTooltip ? 'visible' : 'hidden'">
