@@ -15,7 +15,7 @@
           </div>
         </div>
       </div>
-      <div #canvasContainer></div>
+      <div #canvasContainer (mouseup)="$event.stopPropagation()"></div>
     </div> 
     <div class="action-panel" (click)="$event.stopPropagation()">
       <button class="iz-tool pen-tool" [ngClass]="{'active': tool == 'pen'}" (click)="penTool()"></button>
