@@ -57,6 +57,9 @@
     .plugins-container {
       padding-left: 20px;
       padding-right: 20px;
+      overflow-y: scroll;
+      height: 320px;
+      margin-right: 5px;
 
       .plugin {
         display: flex;
@@ -64,7 +67,7 @@
         padding-right: 10px;
         margin-bottom: 5px;
         width: 100%;
-        height: 30px;
+        min-height: 30px;
         box-sizing: border-box;
         cursor: pointer;
         flex-direction: row;
@@ -76,6 +79,7 @@
         .name {
           width: 100%;
           flex-grow: 1;
+          padding-right: 5px;
         }
   
         .steppers-amount {
