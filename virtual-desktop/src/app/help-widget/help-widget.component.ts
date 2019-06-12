@@ -464,10 +464,10 @@ export class HelpWidgetComponent implements OnInit {
   generateSelector(elem) {
 
     let selectorArray = [];
-    let selector = 'APP-ROOT'; 
+    let selector = 'RS-COM-MVD-WINDOW'; 
     let currentElem = elem;
 
-    while (currentElem.nodeName != 'APP-ROOT') { 
+    while (currentElem.nodeName != 'RS-COM-MVD-WINDOW') { 
 
       // check if there are siblings with same nodeName
       // if it is -> add :nth-child(n) to selector
