@@ -72,7 +72,10 @@ export class CanvasDrawerComponent {
     }
 
     const iframeDocument = this.iframe.contentDocument || this.iframe.contentWindow.document;
-    return html2canvas(iframeDocument.documentElement);
+    return html2canvas(iframeDocument.documentElement, {
+      allowTaint: true,
+      useCORS: true,
+    });
   }
 
   capture() {
@@ -218,7 +221,7 @@ export class CanvasDrawerComponent {
         report.text = 'Yeah, it is issue reporting. You can find image in the attachments';
         report.subject = 'IntroZ issue reporting';
 
-        this.http.post('http://localhost:3000/issueReport', report)
+        this.http.post('http://10.15.104.91:3000/issueReport', report)
           .subscribe(
             () => console.log('Report was sent'),
             error => console.log('Error!!!', error)
